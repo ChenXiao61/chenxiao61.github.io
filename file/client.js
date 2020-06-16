@@ -23,28 +23,28 @@ String.format = function(src){
 function analyze() {
     var uploadFiles = el('file-input').files;
     if (uploadFiles.length != 1) 
-		alert('请选择一个文件!');
+		alert('Please Select One Fundus Image!');
 	else {
-		el('analyze-button').innerHTML = '分析中...';
+		el('analyze-button').innerHTML = 'Analyzing...';
 		var xhr = new XMLHttpRequest();
 		var loc = window.location
 		xhr.open('POST', 'http://123.57.235.182:1573', true);
-		xhr.onerror = function() {alert ('网络错误！');}
+		xhr.onerror = function() {alert ('ERROR！');}
 		xhr.onload = function(e) {
 			if (this.readyState === 4) {
 				var response = JSON.parse(e.target.responseText);
 				if(response.result == 'Normal')
-					var re = '正常';
+					var re = 'Healthy';
 				else if(response.result == 'Abnormal')
-					var re = '异常';
+					var re = 'Abnormal';
 				else
-					alert ('图片格式错误！')
-				var template = "结果为：{0}，且概率为{1}";
+					alert ('Image Format Error！')
+				var template = "Predict：{0}，Probability:{1}";
 				var site = response.Probability;
 				var msg = String.format(template, re, site);
 				el('result-label').innerHTML = msg;
 			}
-			el('analyze-button').innerHTML = '分析';
+			el('analyze-button').innerHTML = 'Analyze';
 		}
     }
 
